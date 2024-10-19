@@ -33,6 +33,16 @@ const RegistrationScreen = () => {
     </TouchableOpacity>
   );
 
+  const onSubmitHandler = () => {
+    const values = { login, email, password };
+    console.log(values);
+    Keyboard.dismiss();
+    setEmail("");
+    setPassword("");
+    setLogin("");
+    setIsSecure(true);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView
@@ -78,8 +88,8 @@ const RegistrationScreen = () => {
           </View>
 
           <View style={[styles.innerContainer, styles.buttonContainer]}>
-            <Button>
-              <Text style={styles.loginButtonText}>Увійти</Text>
+            <Button onPress={onSubmitHandler}>
+              <Text style={styles.loginButtonText}>Зареєстуватися</Text>
             </Button>
 
             <View style={styles.signUpContainer}>
