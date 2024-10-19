@@ -23,12 +23,11 @@ const LoginScreen = () => {
   const [isSecure, setIsSecure] = useState(true);
 
   const onSubmitHandler = () => {
-    const values = { login, email, password };
+    const values = { email, password };
     console.log(values);
     Keyboard.dismiss();
     setEmail("");
     setPassword("");
-    setLogin("");
     setIsSecure(true);
   };
 
