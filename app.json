@@ -7,10 +7,11 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/bgd.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+
     "ios": {
       "supportsTablet": true
     },
@@ -20,8 +21,14 @@
         "backgroundColor": "#ffffff"
       }
     },
+
+    "softwareKeyboardLayoutMode": "pan",
+
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-font"],
+
+    "assetBundlePatterns": ["assets/fonts/*"]
   }
 }
