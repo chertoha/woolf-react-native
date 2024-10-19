@@ -79,7 +79,7 @@ const RegistrationScreen = () => {
 
           <View style={[styles.innerContainer, styles.buttonContainer]}>
             <Button>
-              <Text style={styles.loginButtonText}>Увійти</Text>
+              <Text style={styles.loginButtonText}>Зареєстуватися</Text>
             </Button>
 
             <View style={styles.signUpContainer}>
