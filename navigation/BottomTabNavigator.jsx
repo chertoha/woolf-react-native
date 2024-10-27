@@ -8,7 +8,6 @@ import PersonIcon from "../icons/PersonIcon";
 import { StyleSheet } from "react-native";
 import AddButton from "../components/AddButton";
 import BackButton from "../components/BackButton";
-import CommentsScreen from "../screens/CommentsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,17 +34,6 @@ const BottomTabNavigator = () => {
         }}
       />
 
-      {/* <Tab.Screen
-        name="Comments"
-        component={CommentsScreen}
-        options={{
-          title: "Коментарі",
-          headerLeft: () => <BackButton />,
-          tabBarIcon: ({ focused, color, size }) => null,
-          tabBarStyle: { display: "none" },
-        }}
-      /> */}
-
       <Tab.Screen
         name="CreatePosts"
         component={CreatePostScreen}
@@ -62,6 +50,7 @@ const BottomTabNavigator = () => {
         component={ProfileScreen}
         options={{
           title: "Профіль",
+          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => <PersonIcon />,
         }}
       />

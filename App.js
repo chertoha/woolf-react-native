@@ -39,61 +39,8 @@ export default function App() {
   }
 
   return (
-    // <>
-    //   {/* <LoginScreen /> */}
-    //   {/* <RegistrationScreen /> */}
-    //   <PostsScreen />
-    // </>
-
-    <StackNavigator />
-    // <NavigationContainer>
-    //   <MainStack.Navigator initialRouteName="Posts">
-    //     <MainStack.Screen name="Registration" component={RegistrationScreen} />
-    //     <MainStack.Screen name="Login" component={LoginScreen} />
-    //     <MainStack.Screen
-    //       name="Posts"
-    //       component={PostsScreen}
-    //       options={{
-    //         title: "Публікації",
-    //         headerTitleAlign: "center",
-    //         headerTitleStyle: {
-    //           fontSize: 17,
-    //           lineHeight: 22,
-    //           paddingVertical: 11,
-    //           // borderBottomWidth: 1,
-    //           // borderBottomColor: "black",
-    //         },
-    //         // headerLeft: () => (
-    //         //   <ArrowBackIcon
-    //         //     name="menu"
-    //         //     size={24}
-    //         //     color="black"
-    //         //     onPress={() => alert("Меню")}
-    //         //     style={{ marginLeft: 15 }}
-    //         //   />
-    //         // ),
-
-    //         headerRight: () => <LogoutIcon style={{ marginRight: 16 }} />,
-    //       }}
-    //     />
-    //   </MainStack.Navigator>
-    // </NavigationContainer>
+    <>
+      <StackNavigator />
+    </>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-
-//   text: {
-//     fontFamily: "Roboto-Bold",
-//   },
-//   // bg: {
-//   //   flex: 1,
-//   //   justifyContent: "center",
-//   // },
-// });

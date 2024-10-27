@@ -7,6 +7,7 @@ import PostsScreen from "../screens/PostsScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import CommentsScreen from "../screens/CommentsScreen";
 import BackButton from "../components/BackButton";
+import { StyleSheet } from "react-native";
 
 const MainStack = createStackNavigator();
 
@@ -29,8 +30,12 @@ const StackNavigator = () => {
                 headerShown: true,
                 title: "Коментарі",
                 headerLeft: () => <BackButton />,
-                // tabBarIcon: ({ focused, color, size }) => null,
-                // tabBarStyle: { display: "none" },
+                headerStyle: {
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#B3B3B3",
+                },
+                headerTitleAlign: "center",
+                headerTitleStyle: styles.headerTitleStyle,
               }}
             />
           </>
@@ -43,37 +48,17 @@ const StackNavigator = () => {
             <MainStack.Screen name="Login" component={LoginScreen} />
           </>
         )}
-        {/* <MainStack.Screen name="Registration" component={RegistrationScreen} /> */}
-        {/* <MainStack.Screen name="Login" component={LoginScreen} /> */}
-        {/* <MainStack.Screen
-          name="Posts"
-          component={PostsScreen}
-          options={{
-            title: "Публікації",
-            headerTitleAlign: "center",
-            headerTitleStyle: {
-              fontSize: 17,
-              lineHeight: 22,
-              paddingVertical: 11,
-              // borderBottomWidth: 1,
-              // borderBottomColor: "black",
-            },
-            // headerLeft: () => (
-            //   <ArrowBackIcon
-            //     name="menu"
-            //     size={24}
-            //     color="black"
-            //     onPress={() => alert("Меню")}
-            //     style={{ marginLeft: 15 }}
-            //   />
-            // ),
-
-            headerRight: () => <LogoutIcon style={{ marginRight: 16 }} />,
-          }}
-        /> */}
       </MainStack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  headerTitleStyle: {
+    fontSize: 17,
+    lineHeight: 22,
+    paddingVertical: 11,
+  },
+});
 
 export default StackNavigator;
