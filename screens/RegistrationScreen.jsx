@@ -15,10 +15,12 @@ import Input from "../components/Input";
 import { useState } from "react";
 import Button from "../components/Button";
 import Icon from "react-native-vector-icons/AntDesign";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const RegistrationScreen = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, setLogin] = useState("");
@@ -94,7 +96,7 @@ const RegistrationScreen = () => {
 
             <View style={styles.signUpContainer}>
               <Text style={styles.signUpText}>Вже є акаунт? </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                 <Text style={[styles.signUpText, styles.signUpRef]}>
                   Увійти
                 </Text>

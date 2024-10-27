@@ -14,10 +14,12 @@ import { colors } from "../styles/global";
 import Input from "../components/Input";
 import { useState } from "react";
 import Button from "../components/Button";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSecure, setIsSecure] = useState(true);
@@ -79,7 +81,9 @@ const LoginScreen = () => {
 
             <View style={styles.signUpContainer}>
               <Text style={styles.signUpText}>Немає акаунту? </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Registration")}
+              >
                 <Text style={[styles.signUpText, styles.signUpRef]}>
                   Зареєструватися
                 </Text>
