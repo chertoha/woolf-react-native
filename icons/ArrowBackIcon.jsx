@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-const ArrowBackIcon = (props) => (
+const ArrowBackIcon = ({ stroke = "#212121", ...props }) => (
   <Svg
     xmlns="http://www.w3.org/2000/svg"
     width={24}
@@ -9,7 +9,7 @@ const ArrowBackIcon = (props) => (
     {...props}
   >
     <Path
-      stroke="#212121"
+      stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeOpacity={0.8}

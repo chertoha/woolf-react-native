@@ -16,6 +16,7 @@ import { useState } from "react";
 import Button from "../components/Button";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
+import AddAvatarButton from "../components/AddAvatarButton";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -58,11 +59,12 @@ const RegistrationScreen = () => {
         />
 
         <View style={styles.formContainer}>
-          <View style={styles.avatarWrapper}>
+          {/* <View style={styles.avatarWrapper}>
             <TouchableOpacity style={styles.addButton}>
               <Icon name="plus" size={16} style={styles.addButtonIcon} />
             </TouchableOpacity>
-          </View>
+          </View> */}
+          <AddAvatarButton />
 
           <Text style={styles.title}>Реєстрація</Text>
 

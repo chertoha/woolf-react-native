@@ -1,8 +1,14 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FeedbackIcon from "../icons/FeedbackIcon";
 import LocationIcon from "../icons/LocationIcon";
+import { useNavigation } from "@react-navigation/native";
+import LikeIcon from "../icons/LikeIcon";
 
-const PostCard = ({ card: { img, title, comments, location } }) => {
+const PostCard = ({
+  card: { img, title, comments, location, likes },
+  hasLikes = false,
+}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.cardContainer}>
       <Image source={img} style={styles.cardImage} />
@@ -10,11 +16,23 @@ const PostCard = ({ card: { img, title, comments, location } }) => {
       <Text style={styles.cardTitle}>{title}</Text>
 
       <View style={styles.cardMeta}>
-        <View style={[styles.iconedWrapper, { gap: 6 }]}>
-          <Text>
-            <FeedbackIcon />
-          </Text>
-          <Text>{comments}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 24 }}>
+          <TouchableOpacity
+            style={[styles.iconedWrapper, { gap: 6 }]}
+            onPress={() => navigation.navigate("Comments")}
+          >
+            <Text>
+              <FeedbackIcon />
+            </Text>
+            <Text>{comments}</Text>
+          </TouchableOpacity>
+
+          {hasLikes && (
+            <View style={[styles.iconedWrapper, { gap: 6 }]}>
+              <LikeIcon />
+              <Text>{likes}</Text>
+            </View>
+          )}
         </View>
 
         <View style={[styles.iconedWrapper, { gap: 3 }]}>

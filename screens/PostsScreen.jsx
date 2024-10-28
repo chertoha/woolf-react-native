@@ -1,33 +1,9 @@
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../styles/global";
 import avatarImage from "../assets/avatar.jpg";
-import woodsImage from "../assets/woods.jpg";
-import notWoodsImage from "../assets/not-woods.jpg";
-import PostCard from "../components/PostCard";
 
-const list = [
-  {
-    id: 1,
-    img: woodsImage,
-    title: "Ліс",
-    comments: 0,
-    location: "Ivano-Frankivs'k Region, Ukraine",
-  },
-  {
-    id: 2,
-    img: notWoodsImage,
-    title: "Не Ліс",
-    comments: 0,
-    location: "Ivano-Frankivs'k Region, Ukraine",
-  },
-  {
-    id: 3,
-    img: woodsImage,
-    title: "Зовсім не Ліс",
-    comments: 0,
-    location: "Ivano-Frankivs'k Region, Ukraine",
-  },
-];
+import PostCard from "../components/PostCard";
+import { posts } from "../utils/mockData";
 
 const PostsScreen = () => {
   return (
@@ -46,7 +22,7 @@ const PostsScreen = () => {
 
       <View style={styles.list}>
         <FlatList
-          data={list}
+          data={posts}
           renderItem={({ item }) => <PostCard card={item} />}
           keyExtractor={(item) => item.id}
           ItemSeparatorComponent={() => <View style={{ height: 32 }}></View>}

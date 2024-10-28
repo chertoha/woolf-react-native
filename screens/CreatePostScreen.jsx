@@ -19,11 +19,11 @@ const CreatePostScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <View style={styles.image}>
+        <TouchableOpacity style={styles.image}>
           <View style={styles.imageInner}>
             <CameraIcon />
           </View>
-        </View>
+        </TouchableOpacity>
         <Text style={[styles.text]}>Завантажте фото</Text>
 
         <KeyboardAvoidingView
