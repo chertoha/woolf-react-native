@@ -1,15 +1,57 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../styles/global";
-import { useNavigation } from "@react-navigation/native";
+import avatarImage from "../assets/avatar.jpg";
+import woodsImage from "../assets/woods.jpg";
+import notWoodsImage from "../assets/not-woods.jpg";
+import PostCard from "../components/PostCard";
+
+const list = [
+  {
+    id: 1,
+    img: woodsImage,
+    title: "Ліс",
+    comments: 0,
+    location: "Ivano-Frankivs'k Region, Ukraine",
+  },
+  {
+    id: 2,
+    img: notWoodsImage,
+    title: "Не Ліс",
+    comments: 0,
+    location: "Ivano-Frankivs'k Region, Ukraine",
+  },
+  {
+    id: 3,
+    img: woodsImage,
+    title: "Зовсім не Ліс",
+    comments: 0,
+    location: "Ivano-Frankivs'k Region, Ukraine",
+  },
+];
 
 const PostsScreen = () => {
-  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text>sldlkjsldfkjsldfkjl</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("Comments")}>
-        <Text>To Comments</Text>
-      </TouchableOpacity>
+      <View style={styles.userContainer}>
+        <Image
+          source={avatarImage}
+          resizeMode="cover"
+          style={styles.userAvatar}
+        />
+        <View>
+          <Text style={styles.userName}>Natali Romanova</Text>
+          <Text style={styles.userEmail}>email@example.com</Text>
+        </View>
+      </View>
+
+      <View style={styles.list}>
+        <FlatList
+          data={list}
+          renderItem={({ item }) => <PostCard card={item} />}
+          keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={() => <View style={{ height: 32 }}></View>}
+        />
+      </View>
     </View>
   );
 };
@@ -18,9 +60,34 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
-    // borderWidth: 1,
-    // borderTopColor: "#B3B3B3",
-    // borderBottomColor: "#B3B3B3",
+    paddingVertical: 32,
+    paddingHorizontal: 16,
+    paddingBottom: 80,
+  },
+
+  userContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+
+  userAvatar: {
+    borderRadius: 16,
+    width: 60,
+    height: 60,
+  },
+
+  userName: {
+    fontSize: 13,
+    fontWeight: "700",
+  },
+
+  userEmail: {
+    fontSize: 11,
+  },
+
+  list: {
+    marginTop: 32,
   },
 });
 
