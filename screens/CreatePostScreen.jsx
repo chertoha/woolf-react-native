@@ -14,16 +14,46 @@ import LocationIcon from "../icons/LocationIcon";
 import Button from "../components/Button";
 import CameraIcon from "../icons/CameraIcon";
 import TrashIcon from "../icons/TrashIcon";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import CameraZone from "../components/CameraZone";
+import { useEffect, useState } from "react";
+import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/native";
 
 const CreatePostScreen = () => {
+  const [preview, setPreview] = useState(null);
+  const [name, setName] = useState("");
+  const [place, setPlace] = useState("");
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  const onPublishHandler = () => {
+    console.log({ preview, name, place, location });
+    navigation.navigate("Posts");
+  };
+
+  const isAllowed = !!preview && !!name && !!place && !!location;
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <TouchableOpacity style={styles.image}>
-          <View style={styles.imageInner}>
-            <CameraIcon />
-          </View>
-        </TouchableOpacity>
+        <CameraZone preview={preview} setPreview={setPreview} />
+
         <Text style={[styles.text]}>Завантажте фото</Text>
 
         <KeyboardAvoidingView
@@ -33,6 +63,8 @@ const CreatePostScreen = () => {
             <TextInput
               placeholder="Назва..."
               placeholderTextColor={colors.disabled_dark_gray}
+              value={name}
+              onChangeText={(name) => setName(name)}
             />
           </View>
 
@@ -43,13 +75,23 @@ const CreatePostScreen = () => {
             <TextInput
               placeholder="Місцевість..."
               placeholderTextColor={colors.disabled_dark_gray}
+              value={place}
+              onChangeText={(place) => setPlace(place)}
             />
           </View>
         </KeyboardAvoidingView>
 
         <View style={{ marginTop: 32 }}>
-          <Button disabled>
-            <Text style={[styles.buttonText, styles.text]}>Опубліковати</Text>
+          <Button disabled={!isAllowed} onPress={onPublishHandler}>
+            <Text
+              style={[
+                styles.buttonText,
+                styles.text,
+                { color: isAllowed ? colors.white : colors.disabled_dark_gray },
+              ]}
+            >
+              Опубліковати
+            </Text>
           </Button>
         </View>
 
@@ -94,7 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  text: { color: colors.disabled_dark_gray },
+  text: {},
 
   image: {
     marginBottom: 8,

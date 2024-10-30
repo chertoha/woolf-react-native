@@ -4,6 +4,7 @@ import { colors } from "../styles/global";
 const Button = ({ children, onPress, buttonStyle, disabled = false }) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPress}
       style={[
         styles.button,

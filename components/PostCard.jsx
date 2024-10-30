@@ -35,12 +35,15 @@ const PostCard = ({
           )}
         </View>
 
-        <View style={[styles.iconedWrapper, { gap: 3 }]}>
+        <TouchableOpacity
+          style={[styles.iconedWrapper, { gap: 3 }]}
+          onPress={() => navigation.navigate("Map")}
+        >
           <Text>
             <LocationIcon />
           </Text>
           <Text>{location}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
