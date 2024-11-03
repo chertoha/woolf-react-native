@@ -1,9 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LogoutIcon from "../icons/LogoutIcon";
 import RegistrationScreen from "../screens/RegistrationScreen";
 import LoginScreen from "../screens/LoginScreen";
-import PostsScreen from "../screens/PostsScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import CommentsScreen from "../screens/CommentsScreen";
 import BackButton from "../components/BackButton";
@@ -13,7 +11,7 @@ import MapScreen from "../screens/MapScreen";
 const MainStack = createStackNavigator();
 
 const StackNavigator = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <NavigationContainer>

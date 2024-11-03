@@ -5,6 +5,9 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import StackNavigator from "./navigation/StackNavigator";
+import store from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 const MainStack = createStackNavigator();
@@ -33,7 +36,14 @@ export default function App() {
 
   return (
     <>
-      <StackNavigator />
+      <Provider store={store.store}>
+        <PersistGate
+          loading={<Text>Loading...</Text>}
+          persistor={store.persistor}
+        >
+          <StackNavigator />
+        </PersistGate>
+      </Provider>
     </>
   );
 }
