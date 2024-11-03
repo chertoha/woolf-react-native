@@ -15,22 +15,44 @@ import Input from "../components/Input";
 import { useState } from "react";
 import Button from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../redux/auth/slice";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config";
+import { INITIAL_EMAIL, INITIAL_PASSWORD } from "../utils/constants";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const LoginScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(INITIAL_EMAIL);
+  const [password, setPassword] = useState(INITIAL_PASSWORD);
   const [isSecure, setIsSecure] = useState(true);
+  const dispatch = useDispatch();
 
   const onSubmitHandler = () => {
-    const values = { email, password };
-    console.log(values);
-    Keyboard.dismiss();
-    setEmail("");
-    setPassword("");
-    setIsSecure(true);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // const uid = user.uid;
+        // const email = user.email;
+        // ...
+        // dispatch(loginUser({ uid, email }));
+
+        Keyboard.dismiss();
+        setEmail(INITIAL_EMAIL);
+        setPassword(INITIAL_PASSWORD);
+        setIsSecure(true);
+      })
+      .catch((error) => {
+        if (error.code === "auth/invalid-credential") {
+          alert("Invalid email or password");
+        }
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("LoginError", error);
+      });
   };
 
   const showButton = (

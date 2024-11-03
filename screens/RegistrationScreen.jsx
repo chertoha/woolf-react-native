@@ -17,13 +17,18 @@ import Button from "../components/Button";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import AddAvatarButton from "../components/AddAvatarButton";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config";
+import { INITIAL_EMAIL, INITIAL_PASSWORD } from "../utils/constants";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const RegistrationScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(INITIAL_EMAIL);
+  const [password, setPassword] = useState(INITIAL_PASSWORD);
   const [login, setLogin] = useState("");
   const [isSecure, setIsSecure] = useState(true);
 
@@ -37,13 +42,26 @@ const RegistrationScreen = () => {
   );
 
   const onSubmitHandler = () => {
-    const values = { login, email, password };
-    console.log(values);
-    Keyboard.dismiss();
-    setEmail("");
-    setPassword("");
-    setLogin("");
-    setIsSecure(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+
+        Keyboard.dismiss();
+        setEmail(INITIAL_EMAIL);
+        setPassword(INITIAL_PASSWORD);
+        setLogin("");
+        setIsSecure(true);
+      })
+      .catch((error) => {
+        if (error.code === "auth/email-already-in-use") {
+          alert("Email in use");
+        }
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error, error.code);
+        // ..
+      });
   };
 
   return (

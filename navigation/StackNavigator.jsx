@@ -7,11 +7,12 @@ import CommentsScreen from "../screens/CommentsScreen";
 import BackButton from "../components/BackButton";
 import { StyleSheet } from "react-native";
 import MapScreen from "../screens/MapScreen";
+import useAuth from "../hooks/useAuth";
 
 const MainStack = createStackNavigator();
 
 const StackNavigator = () => {
-  const isLoggedIn = false;
+  const { isLoggedIn } = useAuth();
 
   return (
     <NavigationContainer>

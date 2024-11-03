@@ -14,6 +14,7 @@ import AddAvatarButton from "../components/AddAvatarButton";
 import { posts } from "../utils/mockData";
 import PostCard from "../components/PostCard";
 import LogoutIcon from "../icons/LogoutIcon";
+import LogoutButton from "../components/LogoutButton";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -30,7 +31,7 @@ const ProfileScreen = () => {
         <AddAvatarButton isEmpty={false} />
 
         <View style={{ position: "absolute", right: 16, top: 22 }}>
-          <LogoutIcon />
+          <LogoutButton />
         </View>
 
         <Text

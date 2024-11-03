@@ -5,9 +5,10 @@ import MenuIcon from "../icons/MenuIcon";
 import ProfileScreen from "../screens/ProfileScreen";
 import CreatePostScreen from "../screens/CreatePostScreen";
 import PersonIcon from "../icons/PersonIcon";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AddButton from "../components/AddButton";
 import BackButton from "../components/BackButton";
+import LogoutButton from "../components/LogoutButton";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +30,11 @@ const BottomTabNavigator = () => {
         component={PostsScreen}
         options={{
           title: "Публікації",
-          headerRight: () => <LogoutIcon style={{ marginRight: 16 }} />,
+          headerRight: () => (
+            <View style={{ marginRight: 16 }}>
+              <LogoutButton />
+            </View>
+          ),
           tabBarIcon: ({ focused, color, size }) => <MenuIcon />,
         }}
       />
