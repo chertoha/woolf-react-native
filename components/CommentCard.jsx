@@ -1,12 +1,13 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../styles/global";
+import avatar_1 from "../assets/avatar.jpg";
 
 const CommentCard = ({ item: { avatar, message, datetime }, index }) => {
   const isEven = (index + 1) % 2 === 0;
 
   return (
     <View style={{ flexDirection: isEven ? "row-reverse" : "row", gap: 16 }}>
-      <Image source={avatar} style={styles.image} />
+      <Image source={avatar || avatar_1} style={styles.image} />
       <View
         style={[
           styles.messageContainer,

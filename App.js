@@ -18,7 +18,7 @@ const AuthListener = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("user", user);
+      // console.log("user", user);
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
@@ -26,12 +26,12 @@ const AuthListener = () => {
         const email = user.email;
         const displayName = user.displayName;
         // ...
-        console.log("onAuthStateChanged -> Logged ->", user);
+        // console.log("onAuthStateChanged -> Logged ->", user);
         dispatch(loginUser({ uid, email, displayName }));
       } else {
         // User is signed out
         // ...
-        console.log("onAuthStateChanged -> Not Logged");
+        // console.log("onAuthStateChanged -> Not Logged");
         dispatch(logoutUser());
       }
     });

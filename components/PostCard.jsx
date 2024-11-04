@@ -4,27 +4,26 @@ import LocationIcon from "../icons/LocationIcon";
 import { useNavigation } from "@react-navigation/native";
 import LikeIcon from "../icons/LikeIcon";
 
-const PostCard = ({
-  card: { img, title, comments, location, likes },
-  hasLikes = false,
-}) => {
+const PostCard = ({ card, hasLikes = false }) => {
+  const { id, preview, name, comments, place, likes, location } = card;
+
   const navigation = useNavigation();
   return (
     <View style={styles.cardContainer}>
-      <Image source={img} style={styles.cardImage} />
+      <Image source={preview} style={styles.cardImage} />
 
-      <Text style={styles.cardTitle}>{title}</Text>
+      <Text style={styles.cardTitle}>{name}</Text>
 
       <View style={styles.cardMeta}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 24 }}>
           <TouchableOpacity
             style={[styles.iconedWrapper, { gap: 6 }]}
-            onPress={() => navigation.navigate("Comments")}
+            onPress={() => navigation.navigate("Comments", { postId: id })}
           >
             <Text>
               <FeedbackIcon />
             </Text>
-            <Text>{comments}</Text>
+            <Text>{comments.length}</Text>
           </TouchableOpacity>
 
           {hasLikes && (
@@ -37,12 +36,14 @@ const PostCard = ({
 
         <TouchableOpacity
           style={[styles.iconedWrapper, { gap: 3 }]}
-          onPress={() => navigation.navigate("Map")}
+          onPress={() =>
+            navigation.navigate("Map", { location: JSON.parse(location) })
+          }
         >
           <Text>
             <LocationIcon />
           </Text>
-          <Text>{location}</Text>
+          <Text>{place}</Text>
         </TouchableOpacity>
       </View>
     </View>

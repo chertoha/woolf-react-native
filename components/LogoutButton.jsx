@@ -9,7 +9,7 @@ const LogoutButton = () => {
   const dispatch = useDispatch();
 
   const onLogout = () => {
-    console.log("AUTH", auth);
+    // console.log("AUTH", auth);
     signOut(auth)
       .then(() => {
         // Sign-out successful.

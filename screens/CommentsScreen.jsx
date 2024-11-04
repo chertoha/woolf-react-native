@@ -5,6 +5,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { colors } from "../styles/global";
@@ -13,48 +14,56 @@ import avatar_1 from "../assets/avatar.jpg";
 import CommentCard from "../components/CommentCard";
 import { TextInput } from "react-native-gesture-handler";
 import ArrowBackIcon from "../icons/ArrowBackIcon";
-
-const comments = [
-  {
-    id: 1,
-    avatar: avatar_1,
-    message:
-      "Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!",
-    datetime: "09 червня, 2020 | 08:40",
-  },
-
-  {
-    id: 2,
-    avatar: avatar_1,
-    message:
-      "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
-    datetime: "09 червня, 2020 | 09:14",
-  },
-
-  {
-    id: 3,
-    avatar: avatar_1,
-    message: "Thank you! That was very helpful!",
-    datetime: "09 червня, 2020 | 09:20",
-  },
-
-  {
-    id: 4,
-    avatar: avatar_1,
-    message:
-      "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
-    datetime: "09 червня, 2020 | 09:20",
-  },
-  {
-    id: 5,
-    avatar: avatar_1,
-    message:
-      "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
-    datetime: "09 червня, 2020 | 09:20",
-  },
-];
+import { useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "../config";
+import { nanoid } from "@reduxjs/toolkit";
 
 const CommentsScreen = () => {
+  const {
+    params: { postId },
+  } = useRoute();
+
+  const [message, setMessage] = useState();
+  // const { comments } = post;
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(doc(db, "posts", postId), (snapshot) => {
+      if (snapshot.exists) {
+        setComments(snapshot.data().comments || []);
+      }
+    });
+  }, []);
+
+  const onSendMessage = async () => {
+    try {
+      await updateDoc(doc(db, "posts", postId), {
+        comments: arrayUnion({
+          id: nanoid(),
+          message,
+          datetime: new Intl.DateTimeFormat("uk-UA", {
+            dateStyle: "full",
+            timeStyle: "medium",
+            timeZone: "Australia/Sydney",
+          }).format(new Date()),
+        }),
+      });
+
+      setMessage("");
+    } catch (error) {
+      console.log("onSendMessage", error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image source={image} style={styles.image} />
@@ -82,11 +91,15 @@ const CommentsScreen = () => {
             placeholder="Коментувати..."
             style={styles.input}
             placeholderTextColor={colors.disabled_dark_gray}
+            value={message}
+            onChangeText={setMessage}
           />
 
-          <View style={styles.inputButton}>
-            <ArrowBackIcon stroke={colors.white} />
-          </View>
+          <TouchableOpacity onPress={onSendMessage}>
+            <View style={styles.inputButton}>
+              <ArrowBackIcon stroke={colors.white} />
+            </View>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>

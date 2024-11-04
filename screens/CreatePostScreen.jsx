@@ -20,11 +20,13 @@ import CameraZone from "../components/CameraZone";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../config";
 
 const CreatePostScreen = () => {
   const [preview, setPreview] = useState(null);
-  const [name, setName] = useState("");
-  const [place, setPlace] = useState("");
+  const [name, setName] = useState("Post name");
+  const [place, setPlace] = useState("Kyiv");
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -43,8 +45,25 @@ const CreatePostScreen = () => {
     })();
   }, []);
 
-  const onPublishHandler = () => {
-    console.log({ preview, name, place, location });
+  const onPublishHandler = async () => {
+    // console.log({ preview, name, place, location });
+
+    try {
+      const docRef = await addDoc(
+        collection(db, "posts"),
+        {
+          preview,
+          name,
+          place,
+          location: JSON.stringify(location),
+        },
+        { merge: true }
+      );
+      // console.log("Document written with ID: ", docRef);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+
     navigation.navigate("Posts");
   };
 

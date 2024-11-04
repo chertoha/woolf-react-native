@@ -1,11 +1,34 @@
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { colors } from "../styles/global";
 import avatarImage from "../assets/avatar.jpg";
+import woodsImage from "../assets/woods.jpg";
 
 import PostCard from "../components/PostCard";
-import { posts } from "../utils/mockData";
+import { useEffect, useState } from "react";
+// import { posts } from "../utils/mockData";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { db } from "../config";
 
 const PostsScreen = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(collection(db, "posts"), (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        // preview: doc.data().preview || woodsImage,
+        preview: woodsImage,
+        name: doc.data().name || "Noname",
+        comments: doc.data().comments || [],
+        place: doc.data().place || "no where",
+        likes: doc.data().likes || 0,
+        location: doc.data().location || null,
+      }));
+
+      setPosts(data);
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.userContainer}>
