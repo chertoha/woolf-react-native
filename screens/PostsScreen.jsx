@@ -30,7 +30,6 @@ const PostsScreen = () => {
         location: doc.data().location || null,
       }));
 
-      // setPosts(data);
       dispatch(setPosts(data));
     });
   }, []);

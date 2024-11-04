@@ -11,16 +11,18 @@ import { colors } from "../styles/global";
 import Icon from "react-native-vector-icons/AntDesign";
 import avatarImage from "../assets/avatar.jpg";
 import AddAvatarButton from "../components/AddAvatarButton";
-import { posts } from "../utils/mockData";
 import PostCard from "../components/PostCard";
 import LogoutIcon from "../icons/LogoutIcon";
 import LogoutButton from "../components/LogoutButton";
 import useAuth from "../hooks/useAuth";
+import { useSelector } from "react-redux";
+import { selectPosts } from "../redux/posts/selectors";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const ProfileScreen = () => {
   const { user } = useAuth();
+  const posts = useSelector(selectPosts);
   return (
     <View style={styles.container}>
       <Image
