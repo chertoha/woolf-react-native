@@ -24,10 +24,10 @@ const AuthListener = () => {
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
         const email = user.email;
-
+        const displayName = user.displayName;
         // ...
         console.log("onAuthStateChanged -> Logged ->", user);
-        dispatch(loginUser({ uid, email }));
+        dispatch(loginUser({ uid, email, displayName }));
       } else {
         // User is signed out
         // ...

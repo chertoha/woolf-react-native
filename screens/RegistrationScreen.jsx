@@ -17,9 +17,17 @@ import Button from "../components/Button";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import AddAvatarButton from "../components/AddAvatarButton";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../config";
-import { INITIAL_EMAIL, INITIAL_PASSWORD } from "../utils/constants";
+import {
+  INITIAL_EMAIL,
+  INITIAL_LOGIN,
+  INITIAL_PASSWORD,
+} from "../utils/constants";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
@@ -27,9 +35,9 @@ const RegistrationScreen = () => {
   const navigation = useNavigation();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
+  const [login, setLogin] = useState(INITIAL_LOGIN);
   const [email, setEmail] = useState(INITIAL_EMAIL);
   const [password, setPassword] = useState(INITIAL_PASSWORD);
-  const [login, setLogin] = useState("");
   const [isSecure, setIsSecure] = useState(true);
 
   const showButton = (
@@ -41,27 +49,30 @@ const RegistrationScreen = () => {
     </TouchableOpacity>
   );
 
-  const onSubmitHandler = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
+  const onSubmitHandler = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-        Keyboard.dismiss();
-        setEmail(INITIAL_EMAIL);
-        setPassword(INITIAL_PASSWORD);
-        setLogin("");
-        setIsSecure(true);
-      })
-      .catch((error) => {
-        if (error.code === "auth/email-already-in-use") {
-          alert("Email in use");
-        }
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(error, error.code);
-        // ..
-      });
+      await updateProfile(user, { displayName: login });
+
+      Keyboard.dismiss();
+      setEmail(INITIAL_EMAIL);
+      setPassword(INITIAL_PASSWORD);
+      setLogin(INITIAL_LOGIN);
+      setIsSecure(true);
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("Email in use");
+      }
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(error, error.code);
+    }
   };
 
   return (

@@ -15,10 +15,12 @@ import { posts } from "../utils/mockData";
 import PostCard from "../components/PostCard";
 import LogoutIcon from "../icons/LogoutIcon";
 import LogoutButton from "../components/LogoutButton";
+import useAuth from "../hooks/useAuth";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("screen");
 
 const ProfileScreen = () => {
+  const { user } = useAuth();
   return (
     <View style={styles.container}>
       <Image
@@ -42,7 +44,7 @@ const ProfileScreen = () => {
             marginBottom: 32,
           }}
         >
-          Natali Romanova
+          {user?.displayName || "Noname"}
         </Text>
 
         <FlatList
