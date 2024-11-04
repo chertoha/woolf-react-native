@@ -26,6 +26,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../config";
 import { nanoid } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import { selectComments } from "../redux/comments/selectors";
+import { setComments } from "../redux/comments/slice";
 
 const CommentsScreen = () => {
   const {
@@ -33,13 +36,13 @@ const CommentsScreen = () => {
   } = useRoute();
 
   const [message, setMessage] = useState();
-  // const { comments } = post;
-  const [comments, setComments] = useState([]);
+  const dispatch = useDispatch();
+  const comments = useSelector(selectComments);
 
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshot) => {
       if (snapshot.exists) {
-        setComments(snapshot.data().comments || []);
+        dispatch(setComments(snapshot.data().comments || []));
       }
     });
   }, []);

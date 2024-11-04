@@ -8,10 +8,15 @@ import { useEffect, useState } from "react";
 // import { posts } from "../utils/mockData";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { db } from "../config";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPosts } from "../redux/posts/selectors";
+import { setPosts } from "../redux/posts/slice";
 
 const PostsScreen = () => {
-  const [posts, setPosts] = useState([]);
-
+  // const [posts, setPosts] = useState([]);
+  const posts = useSelector(selectPosts);
+  const dispatch = useDispatch();
+  // console.log(posts);
   useEffect(() => {
     onSnapshot(collection(db, "posts"), (snapshot) => {
       const data = snapshot.docs.map((doc) => ({
@@ -25,7 +30,8 @@ const PostsScreen = () => {
         location: doc.data().location || null,
       }));
 
-      setPosts(data);
+      // setPosts(data);
+      dispatch(setPosts(data));
     });
   }, []);
 
